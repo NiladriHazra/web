@@ -1,8 +1,7 @@
 {
-  "/api/auth/[...all]/route": "app/api/auth/[...all]/route.js",
   "/(marketing)/page": "app/(marketing)/page.js",
   "/(app)/projects/page": "app/(app)/projects/page.js",
+  "/(app)/admin/waitlist/page": "app/(app)/admin/waitlist/page.js",
   "/(app)/admin/users/page": "app/(app)/admin/users/page.js",
-  "/(app)/admin/page": "app/(app)/admin/page.js",
-  "/(app)/admin/waitlist/page": "app/(app)/admin/waitlist/page.js"
+  "/(app)/admin/page": "app/(app)/admin/page.js"
 }

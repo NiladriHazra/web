@@ -1,5 +1,42 @@
 {
-  "node": {},
+  "node": {
+    "40efcf202d978935ec08527a534cde1a6311aa7b9d": {
+      "workers": {
+        "app/(app)/admin/page": {
+          "moduleId": "(action-browser)/../../node_modules/.bun/next@15.5.14+bf16f8eded5e12ee/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fniladri%2FDocuments%2Fmine%2Fklipeolanding%2Fapps%2Fweb%2Fsrc%2Ffeatures%2Fadmin%2Fserver%2Factions.ts%22%2C%5B%7B%22id%22%3A%2240efcf202d978935ec08527a534cde1a6311aa7b9d%22%2C%22exportedName%22%3A%22deleteUserAction%22%2C%22filename%22%3A%22features%2Fadmin%2Fserver%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260d1380a6c35b028f24e489c658b38e478d3568dfc%22%2C%22exportedName%22%3A%22updateUserRoleAction%22%2C%22filename%22%3A%22features%2Fadmin%2Fserver%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": true
+        },
+        "app/(app)/admin/users/page": {
+          "moduleId": "(action-browser)/../../node_modules/.bun/next@15.5.14+bf16f8eded5e12ee/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fniladri%2FDocuments%2Fmine%2Fklipeolanding%2Fapps%2Fweb%2Fsrc%2Ffeatures%2Fadmin%2Fserver%2Factions.ts%22%2C%5B%7B%22id%22%3A%2240efcf202d978935ec08527a534cde1a6311aa7b9d%22%2C%22exportedName%22%3A%22deleteUserAction%22%2C%22filename%22%3A%22features%2Fadmin%2Fserver%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260d1380a6c35b028f24e489c658b38e478d3568dfc%22%2C%22exportedName%22%3A%22updateUserRoleAction%22%2C%22filename%22%3A%22features%2Fadmin%2Fserver%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": true
+        }
+      },
+      "layer": {
+        "app/(app)/admin/page": "action-browser",
+        "app/(app)/admin/users/page": "action-browser"
+      },
+      "filename": "features/admin/server/actions.ts",
+      "exportedName": "deleteUserAction"
+    },
+    "60d1380a6c35b028f24e489c658b38e478d3568dfc": {
+      "workers": {
+        "app/(app)/admin/page": {
+          "moduleId": "(action-browser)/../../node_modules/.bun/next@15.5.14+bf16f8eded5e12ee/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fniladri%2FDocuments%2Fmine%2Fklipeolanding%2Fapps%2Fweb%2Fsrc%2Ffeatures%2Fadmin%2Fserver%2Factions.ts%22%2C%5B%7B%22id%22%3A%2240efcf202d978935ec08527a534cde1a6311aa7b9d%22%2C%22exportedName%22%3A%22deleteUserAction%22%2C%22filename%22%3A%22features%2Fadmin%2Fserver%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260d1380a6c35b028f24e489c658b38e478d3568dfc%22%2C%22exportedName%22%3A%22updateUserRoleAction%22%2C%22filename%22%3A%22features%2Fadmin%2Fserver%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": true
+        },
+        "app/(app)/admin/users/page": {
+          "moduleId": "(action-browser)/../../node_modules/.bun/next@15.5.14+bf16f8eded5e12ee/node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fniladri%2FDocuments%2Fmine%2Fklipeolanding%2Fapps%2Fweb%2Fsrc%2Ffeatures%2Fadmin%2Fserver%2Factions.ts%22%2C%5B%7B%22id%22%3A%2240efcf202d978935ec08527a534cde1a6311aa7b9d%22%2C%22exportedName%22%3A%22deleteUserAction%22%2C%22filename%22%3A%22features%2Fadmin%2Fserver%2Factions.ts%22%7D%2C%7B%22id%22%3A%2260d1380a6c35b028f24e489c658b38e478d3568dfc%22%2C%22exportedName%22%3A%22updateUserRoleAction%22%2C%22filename%22%3A%22features%2Fadmin%2Fserver%2Factions.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": true
+        }
+      },
+      "layer": {
+        "app/(app)/admin/page": "action-browser",
+        "app/(app)/admin/users/page": "action-browser"
+      },
+      "filename": "features/admin/server/actions.ts",
+      "exportedName": "updateUserRoleAction"
+    }
+  },
   "edge": {},
   "encryptionKey": "9g5ndLMNfIX5a28pbR1O31vUwyUsDCJ9G1QWn3cnhZ0="
 }

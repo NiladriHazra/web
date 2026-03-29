@@ -11,14 +11,16 @@ import { WaitlistClient } from "./waitlist-client";
 
 interface WaitlistPageProps {
   initialOverview?: WaitlistOverview;
+  isAuthenticated?: boolean;
 }
 
 export function WaitlistPage({
   initialOverview = EMPTY_WAITLIST_OVERVIEW,
+  isAuthenticated,
 }: WaitlistPageProps) {
   return (
     <>
-      <Header />
+      <Header isAuthenticated={isAuthenticated} />
       <div className="relative flex min-h-svh flex-col items-center justify-center overflow-x-clip">
         <div className="absolute inset-0 -z-10">
           <SmokeBackground smokeColor="#162b4a" />

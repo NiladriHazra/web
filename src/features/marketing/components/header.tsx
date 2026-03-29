@@ -5,7 +5,11 @@ import { siteConfig } from "@klipeo/shared";
 import { BrandLogo } from "./brand-logo";
 import { UserMenu } from "@/features/auth/components/user-menu";
 
-export function Header() {
+interface HeaderProps {
+  isAuthenticated?: boolean;
+}
+
+export function Header({ isAuthenticated }: HeaderProps) {
   return (
     <header className="absolute top-0 left-0 z-20 w-full">
       <div className="flex items-center justify-between px-4 pt-4 md:px-6 md:pt-5">
@@ -18,7 +22,7 @@ export function Header() {
             {siteConfig.name}
           </span>
         </Link>
-        <UserMenu />
+        <UserMenu isAuthenticated={isAuthenticated} />
       </div>
     </header>
   );

@@ -1,4 +1,5 @@
 import { EMPTY_WAITLIST_OVERVIEW } from "@klipeo/shared";
+import { getCurrentSession } from "@/features/auth/session";
 import { getWaitlistOverview } from "@/features/waitlist/server";
 import { WaitlistPage } from "@/features/waitlist";
 
@@ -15,7 +16,15 @@ async function readInitialOverview() {
 }
 
 export default async function Waitlist() {
-  const overview = await readInitialOverview();
+  const [overview, session] = await Promise.all([
+    readInitialOverview(),
+    getCurrentSession(),
+  ]);
 
-  return <WaitlistPage initialOverview={overview} />;
+  return (
+    <WaitlistPage
+      initialOverview={overview}
+      isAuthenticated={Boolean(session)}
+    />
+  );
 }

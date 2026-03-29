@@ -1,51 +1,132 @@
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  UserMultipleIcon,
+  MailAtSign01Icon,
+  SecurityCheckIcon,
+  Clock01Icon,
+} from "@hugeicons/core-free-icons";
 import { requireAdminSession } from "@/features/auth/session";
+import {
+  getRecentUsers,
+  getUserCount,
+  getWaitlistCount,
+} from "@/features/admin/server/admin-service";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { StatCard } from "@/features/admin/components/stat-card";
+import { UserRoleSelect } from "@/features/admin/components/user-role-select";
+import { AdminPageTransition } from "@/features/admin/components/admin-page-transition";
 
-export default async function AdminPage() {
+export default async function AdminDashboardPage() {
   const session = await requireAdminSession();
+  const currentUserId = String(session.user.id);
+
+  const [recentUsers, userCount, waitlistCount] = await Promise.all([
+    getRecentUsers(),
+    getUserCount(),
+    getWaitlistCount(),
+  ]);
 
   return (
-    <main className="min-h-screen bg-background px-6 py-16 text-white">
-      <div className="mx-auto max-w-5xl">
-        <p className="text-sm font-medium uppercase tracking-[0.28em] text-amber-300/80">
-          Admin Dashboard
-        </p>
-        <h1 className="mt-4 text-4xl font-semibold tracking-tight">
-          Welcome back, {session.user.name}
-        </h1>
-        <p className="mt-4 max-w-2xl text-sm leading-7 text-white/60">
-          This area is restricted to users whose role is set to
-          <span className="mx-1 rounded bg-white/10 px-2 py-0.5 font-medium text-white">
-            admin
-          </span>
-          in the auth users table.
-        </p>
-
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <p className="text-xs uppercase tracking-[0.24em] text-white/45">
-              Access Level
-            </p>
-            <p className="mt-3 text-2xl font-semibold capitalize">
-              {session.user.role}
-            </p>
-          </div>
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <p className="text-xs uppercase tracking-[0.24em] text-white/45">
-              Signed In As
-            </p>
-            <p className="mt-3 text-2xl font-semibold">{session.user.email}</p>
-          </div>
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <p className="text-xs uppercase tracking-[0.24em] text-white/45">
-              Next Step
-            </p>
-            <p className="mt-3 text-sm leading-6 text-white/65">
-              Replace this placeholder with your real admin analytics and
-              controls.
-            </p>
-          </div>
+    <AdminPageTransition>
+      <div className="p-6 md:p-8">
+        <div data-animate>
+          <h1 className="text-2xl font-semibold tracking-tight">
+            Welcome back, {session?.user.name}
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Here&apos;s an overview of your platform.
+          </p>
         </div>
+
+        <div data-animate className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <StatCard
+            label="Total Users"
+            value={userCount}
+            icon={<HugeiconsIcon icon={UserMultipleIcon} size={22} />}
+          />
+          <StatCard
+            label="Waitlist"
+            value={waitlistCount}
+            icon={<HugeiconsIcon icon={MailAtSign01Icon} size={22} />}
+          />
+          <StatCard
+            label="Your Role"
+            value={session?.user.role ?? "user"}
+            icon={<HugeiconsIcon icon={SecurityCheckIcon} size={22} />}
+          />
+        </div>
+
+        <Card data-animate className="mt-8">
+          <CardHeader className="flex-row items-center justify-between">
+            <CardTitle className="flex items-center gap-2 text-base">
+              <HugeiconsIcon
+                icon={Clock01Icon}
+                size={18}
+                className="text-muted-foreground"
+              />
+              Recent Users
+            </CardTitle>
+            <Badge variant="outline">{recentUsers.length} shown</Badge>
+          </CardHeader>
+          <CardContent className="p-0">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>User</TableHead>
+                  <TableHead className="hidden sm:table-cell">Email</TableHead>
+                  <TableHead>Role</TableHead>
+                  <TableHead className="hidden md:table-cell">Joined</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {recentUsers.map((user) => (
+                  <TableRow key={user.id}>
+                    <TableCell>
+                      <div className="flex items-center gap-3">
+                        <Avatar className="h-8 w-8">
+                          {user.image && <AvatarImage src={user.image} />}
+                          <AvatarFallback className="text-xs">
+                            {user.name.charAt(0).toUpperCase()}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="min-w-0">
+                          <p className="truncate font-medium">{user.name}</p>
+                          <p className="truncate text-xs text-muted-foreground sm:hidden">
+                            {user.email}
+                          </p>
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell className="hidden sm:table-cell">
+                      <span className="text-muted-foreground">{user.email}</span>
+                    </TableCell>
+                    <TableCell>
+                      <UserRoleSelect
+                        userId={user.id}
+                        role={user.role}
+                        isSelf={String(user.id) === currentUserId}
+                      />
+                    </TableCell>
+                    <TableCell className="hidden text-muted-foreground md:table-cell">
+                      {user.createdAt.toLocaleDateString()}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
       </div>
-    </main>
+    </AdminPageTransition>
   );
 }

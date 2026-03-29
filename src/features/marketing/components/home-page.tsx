@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import { siteConfig } from "@klipeo/shared";
 import { useRouter } from "next/navigation";
 import { SmokeBackground } from "@/shared/components/smoke-background";
-import { prefetchWaitlistOverview } from "@/features/waitlist/api/client";
 import { Footer } from "./footer";
 import { Header } from "./header";
 import { Hero } from "./landing/hero";
@@ -12,12 +11,16 @@ import { SplashScreen } from "./splash-screen";
 
 const SPLASH_KEY = "klipeo-splash-seen";
 
+interface HomePageProps {
+  isAuthenticated?: boolean;
+}
+
 function getHasSeenSplash() {
   if (typeof window === "undefined") return false;
   return sessionStorage.getItem(SPLASH_KEY) === "1";
 }
 
-export function HomePage() {
+export function HomePage({ isAuthenticated }: HomePageProps) {
   const router = useRouter();
   const hasSeen = useSyncExternalStore(
     () => () => {},
@@ -34,10 +37,10 @@ export function HomePage() {
   }, []);
 
   useEffect(() => {
-    router.prefetch(siteConfig.routes.waitlist);
-
-    void prefetchWaitlistOverview();
-  }, [router]);
+    router.prefetch(
+      isAuthenticated ? siteConfig.routes.projects : siteConfig.routes.signIn,
+    );
+  }, [isAuthenticated, router]);
 
   return (
     <>
@@ -48,7 +51,7 @@ export function HomePage() {
         <div className="absolute inset-0 -z-10">
           <SmokeBackground smokeColor="#162b4a" />
         </div>
-        <Header />
+        <Header isAuthenticated={isAuthenticated} />
         <Hero splashDone={splashDone} />
         <Footer />
       </div>

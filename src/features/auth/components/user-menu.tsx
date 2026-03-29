@@ -6,14 +6,20 @@ import { siteConfig } from "@klipeo/shared";
 import { GhostGlowButton, GlowButton } from "@klipeo/ui";
 import { authClient } from "../client";
 
-export function UserMenu() {
-  const { data: session, isPending } = authClient.useSession();
-  const pathname = usePathname();
-  const isWaitlist = pathname === "/waitlist";
+interface UserMenuProps {
+  isAuthenticated?: boolean;
+}
 
-  if (isPending) return null;
+interface UserMenuContentProps {
+  isAuthenticated: boolean;
+  isWaitlist: boolean;
+}
 
-  if (session) {
+function UserMenuContent({
+  isAuthenticated,
+  isWaitlist,
+}: UserMenuContentProps) {
+  if (isAuthenticated) {
     return (
       <Link href={siteConfig.routes.projects}>
         <GhostGlowButton>Projects</GhostGlowButton>
@@ -33,4 +39,33 @@ export function UserMenu() {
       )}
     </div>
   );
+}
+
+function ClientUserMenu({ isWaitlist }: { isWaitlist: boolean }) {
+  const { data: session, isPending } = authClient.useSession();
+
+  if (isPending) return null;
+
+  return (
+    <UserMenuContent
+      isAuthenticated={Boolean(session)}
+      isWaitlist={isWaitlist}
+    />
+  );
+}
+
+export function UserMenu({ isAuthenticated }: UserMenuProps) {
+  const pathname = usePathname();
+  const isWaitlist = pathname === "/waitlist";
+
+  if (typeof isAuthenticated === "boolean") {
+    return (
+      <UserMenuContent
+        isAuthenticated={isAuthenticated}
+        isWaitlist={isWaitlist}
+      />
+    );
+  }
+
+  return <ClientUserMenu isWaitlist={isWaitlist} />;
 }
